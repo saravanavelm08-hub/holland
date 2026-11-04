@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Adventure: Unit 6 - Holland & Peter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .heading-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .highlight-passage {
+            background-color: #fef08a;
+            transition: all 0.3s ease;
+        }
+        .pulse-hint {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(234, 179, 8, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-sky-100 via-blue-50 to-amber-50 min-h-screen text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 py-4 px-6 border-b border-sky-100">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-sky-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-sky-200">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+                <div>
+                    <h1 class="heading-font text-2xl font-bold text-sky-600">Reading Adventure!</h1>
+                    <p class="text-sm text-slate-500 font-semibold">Unit 6: The Land of Dikes & Peter</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="bg-amber-100 border border-amber-300 px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-star text-amber-500 text-lg"></i>
+                    <span class="font-bold text-amber-800 text-lg" id="score-display">0 / 5</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+
+        <!-- Welcome Banner -->
+        <section class="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+            <div class="relative z-10 space-y-2 mb-4 md:mb-0">
+                <span class="bg-white/20 text-white text-xs uppercase tracking-wider px-3 py-1 rounded-full font-bold">Interactive Reading</span>
+                <h2 class="heading-font text-3xl font-bold">Explore Holland with Us! 🇳🇱</h2>
+                <p class="text-sky-100 text-base max-w-lg">Read the story carefully, listen out loud if you need help, and answer the fun questions below!</p>
+            </div>
+            <div class="relative z-10 flex gap-3">
+                <button onclick="readPassage()" class="bg-white text-sky-600 hover:bg-sky-50 font-bold px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-volume-high text-xl"></i> Read Story Aloud
+                </button>
+            </div>
+            <!-- Decorative circles -->
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+        </section>
+
+        <!-- Passage Card -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 relative">
+            <div class="flex items-center justify-between mb-4 border-b pb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-sky-500 text-xl"></i>
+                    <h3 class="heading-font text-xl font-bold text-slate-700">The Story</h3>
+                </div>
+                <span class="text-xs font-bold text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Tap words or sentences to explore</span>
+            </div>
+
+            <!-- Passage Text -->
+            <div id="passage-container" class="space-y-4 text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+                <p id="p-sentence-1" class="p-2 rounded-xl transition-all">
+                    Holland is a country where much of the land lies below sea level.
+                </p>
+                <p id="p-sentence-2" class="p-2 rounded-xl transition-all">
+                    Only great walls called <strong>dikes</strong> keep the North Sea from rushing in and flooding the land.
+                </p>
+                <p id="p-sentence-3" class="p-2 rounded-xl transition-all">
+                    For centuries the people of Holland have worked to keep the walls strong so that their country will be safe and dry.
+                </p>
+                <p id="p-sentence-4" class="p-2 rounded-xl transition-all">
+                    Even the little children know the dikes must be watched every moment, and that a hole no longer than your finger can be a very dangerous thing.
+                </p>
+                <p id="p-sentence-5" class="p-2 rounded-xl transition-all">
+                    Many years ago there lived in Holland a boy named Peter.
+                </p>
+                <p id="p-sentence-6" class="p-2 rounded-xl transition-all">
+                    Peter's father was one of the men who tended the gates in the dikes, called <strong>sluices</strong>.
+                </p>
+                <p id="p-sentence-7" class="p-2 rounded-xl transition-all">
+                    He opened and closed the sluices so that <strong>ships</strong> could pass out of Holland's canals into the great sea.
+                </p>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-2 px-2">
+                <i class="fa-solid fa-clipboard-question text-indigo-500 text-2xl"></i>
+                <h3 class="heading-font text-2xl font-bold text-slate-800">Choose the Correct Answer!</h3>
+            </div>
+
+            <div id="quiz-container" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="1" data-hint="1">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">1</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">Where does much of the land of Holland lie?</h4>
+                        </div>
+                        <button onclick="showHint(1)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-1">
+                        <button onclick="checkAnswer(1, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Above sea level
+                        </button>
+                        <button onclick="checkAnswer(1, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Below sea level
+                        </button>
+                        <button onclick="checkAnswer(1, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            High up in the mountains
+                        </button>
+                        <button onclick="checkAnswer(1, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            On a high plateau
+                        </button>
+                    </div>
+                    <div id="feedback-1" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="2" data-hint="2">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">2</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What are the Great Walls called?</h4>
+                        </div>
+                        <button onclick="showHint(2)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-2">
+                        <button onclick="checkAnswer(2, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Dams
+                        </button>
+                        <button onclick="checkAnswer(2, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Dikes
+                        </button>
+                        <button onclick="checkAnswer(2, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Fences
+                        </button>
+                        <button onclick="checkAnswer(2, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Bridges
+                        </button>
+                    </div>
+                    <div id="feedback-2" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="3" data-hint="2">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">3</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What prevents the North Sea from rushing in and flooding the land?</h4>
+                        </div>
+                        <button onclick="showHint(2)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-3">
+                        <button onclick="checkAnswer(3, 0, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            The dikes
+                        </button>
+                        <button onclick="checkAnswer(3, 1, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Tall mountains
+                        </button>
+                        <button onclick="checkAnswer(3, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Big ships
+                        </button>
+                        <button onclick="checkAnswer(3, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Deep canals
+                        </button>
+                    </div>
+                    <div id="feedback-3" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="4" data-hint="6">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">4</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What was Peter's father doing in Holland?</h4>
+                        </div>
+                        <button onclick="showHint(6)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-4">
+                        <button onclick="checkAnswer(4, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Building houses
+                        </button>
+                        <button onclick="checkAnswer(4, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Tending the gates in the dike (sluices)
+                        </button>
+                        <button onclick="checkAnswer(4, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Sailing ships
+                        </button>
+                        <button onclick="checkAnswer(4, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Catching fish
+                        </button>
+                    </div>
+                    <div id="feedback-4" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="5" data-hint="7">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">5</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">Where do the ships pass?</h4>
+                        </div>
+                        <button onclick="showHint(7)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-5">
+                        <button onclick="checkAnswer(5, 0, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Out of Holland's canals into the great sea
+                        </button>
+                        <button onclick="checkAnswer(5, 1, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Into the small rivers
+                        </button>
+                        <button onclick="checkAnswer(5, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Over the mountains
+                        </button>
+                        <button onclick="checkAnswer(5, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Through the deep caves
+                        </button>
+                    </div>
+                    <div id="feedback-5" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+            </div>
+
+            <!-- Reset / Try Again Bar -->
+            <div class="text-center pt-6">
+                <button onclick="resetQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-8 py-4 rounded-2xl shadow-md transition-all">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Reset & Try Again
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-slate-400 text-sm font-semibold">
+        Designed with care for young learners & late bloomers 🌟
+    </footer>
+
+    <!-- Interactive JS Logic -->
+    <script>
+        // Track answered questions and score
+        const answeredState = { 1: false, 2: false, 3: false, 4: false, 5: false };
+        let currentScore = 0;
+
+        function updateScoreDisplay() {
+            document.getElementById('score-display').innerText = `${currentScore} / 5`;
+            if(currentScore === 5) {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function checkAnswer(qid, optionIndex, isCorrect) {
+            if (answeredState[qid]) return; // Prevent changing after correct answer
+
+            const optionsContainer = document.getElementById(`options-${qid}`);
+            const buttons = optionsContainer.getElementsByTagName('button');
+            const feedbackDiv = document.getElementById(`feedback-${qid}`);
+
+            answeredState[qid] = true;
+
+            // Disable all buttons for this question
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-70', 'cursor-not-allowed');
+            }
+
+            feedbackDiv.classList.remove('hidden');
+
+            if (isCorrect) {
+                currentScore++;
+                updateScoreDisplay();
+                buttons[optionIndex].classList.remove('bg-slate-50/50', 'border-slate-100');
+                buttons[optionIndex].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'opacity-100');
+                
+                feedbackDiv.className = "mt-4 p-4 rounded-2xl text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-3";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 text-xl"></i> Excellent job! That is correct! 🎉`;
+                
+                // Trigger small celebratory confetti
+                confetti({
+                    particleCount: 40,
+                    spread: 50,
+                    origin: { y: 0.7 }
+                });
+            } else {
+                buttons[optionIndex].classList.remove('bg-slate-50/50', 'border-slate-100');
+                buttons[optionIndex].classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900', 'opacity-100');
+
+                // Find and highlight the correct answer
+                for (let i = 0; i < buttons.length; i++) {
+                    // Check onclick attribute string to find correct answer
+                    if (buttons[i].getAttribute('onclick').includes('true')) {
+                        buttons[i].classList.remove('bg-slate-50/50', 'border-slate-100');
+                        buttons[i].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-800', 'opacity-100');
+                    }
+                }
+
+                feedbackDiv.className = "mt-4 p-4 rounded-2xl text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-3";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-500 text-xl">></i> Not quite! Check the highlighted hint in the story above and keep trying! 💪`;
+            }
+        }
+
+        function showHint(sentenceNum) {
+            // Remove highlight from all sentences first
+            for (let i = 1; i <= 7; i++) {
+                const el = document.getElementById(`p-sentence-${i}`);
+                if (el) el.classList.remove('highlight-passage', 'pulse-hint', 'bg-amber-100');
+            }
+
+            // Highlight target sentence
+            const target = document.getElementById(`p-sentence-${sentenceNum}`);
+            if (target) {
+                target.classList.add('highlight-passage', 'pulse-hint', 'bg-amber-100');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function readPassage() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop any ongoing speech
+                const text = document.getElementById('passage-container').innerText;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9; // Slightly slower for struggling readers
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Text-to-speech is not supported by your browser.');
+            }
+        }
+
+        function resetQuiz() {
+            currentScore = 0;
+            updateScoreDisplay();
+            for (let i = 1; i <= 5; i++) {
+                answeredState[i] = false;
+                const optionsContainer = document.getElementById(`options-${i}`);
+                const buttons = optionsContainer.getElementsByTagName('button');
+                for (let btn of buttons) {
+                    btn.disabled = false;
+                    btn.className = "option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all";
+                }
+                const feedbackDiv = document.getElementById(`feedback-${i}`);
+                feedbackDiv.classList.add('hidden');
+                feedbackDiv.innerHTML = '';
+            }
+            for (let i = 1; i <= 7; i++) {
+                const el = document.getElementById(`p-sentence-${i}`);
+                if (el) el.classList.remove('highlight-passage', 'pulse-hint', 'bg-amber-100');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Adventure: Unit 6 - Holland & Peter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .heading-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .highlight-passage {
+            background-color: #fef08a;
+            transition: all 0.3s ease;
+        }
+        .pulse-hint {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(234, 179, 8, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-sky-100 via-blue-50 to-amber-50 min-h-screen text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 py-4 px-6 border-b border-sky-100">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-sky-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-sky-200">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+                <div>
+                    <h1 class="heading-font text-2xl font-bold text-sky-600">Reading Adventure!</h1>
+                    <p class="text-sm text-slate-500 font-semibold">Unit 6: The Land of Dikes & Peter</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="bg-amber-100 border border-amber-300 px-4 py-2 rounded-2xl flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-star text-amber-500 text-lg"></i>
+                    <span class="font-bold text-amber-800 text-lg" id="score-display">0 / 5</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+
+        <!-- Welcome Banner -->
+        <section class="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between">
+            <div class="relative z-10 space-y-2 mb-4 md:mb-0">
+                <span class="bg-white/20 text-white text-xs uppercase tracking-wider px-3 py-1 rounded-full font-bold">Interactive Reading</span>
+                <h2 class="heading-font text-3xl font-bold">Explore Holland with Us! 🇳🇱</h2>
+                <p class="text-sky-100 text-base max-w-lg">Read the story carefully, listen out loud if you need help, and answer the fun questions below!</p>
+            </div>
+            <div class="relative z-10 flex gap-3">
+                <button onclick="readPassage()" class="bg-white text-sky-600 hover:bg-sky-50 font-bold px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-volume-high text-xl"></i> Read Story Aloud
+                </button>
+            </div>
+            <!-- Decorative circles -->
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+        </section>
+
+        <!-- Passage Card -->
+        <section class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 relative">
+            <div class="flex items-center justify-between mb-4 border-b pb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-sky-500 text-xl"></i>
+                    <h3 class="heading-font text-xl font-bold text-slate-700">The Story</h3>
+                </div>
+                <span class="text-xs font-bold text-sky-600 bg-sky-50 px-3 py-1 rounded-full">Tap words or sentences to explore</span>
+            </div>
+
+            <!-- Passage Text -->
+            <div id="passage-container" class="space-y-4 text-lg md:text-xl text-slate-700 leading-relaxed font-medium">
+                <p id="p-sentence-1" class="p-2 rounded-xl transition-all">
+                    Holland is a country where much of the land lies below sea level.
+                </p>
+                <p id="p-sentence-2" class="p-2 rounded-xl transition-all">
+                    Only great walls called <strong>dikes</strong> keep the North Sea from rushing in and flooding the land.
+                </p>
+                <p id="p-sentence-3" class="p-2 rounded-xl transition-all">
+                    For centuries the people of Holland have worked to keep the walls strong so that their country will be safe and dry.
+                </p>
+                <p id="p-sentence-4" class="p-2 rounded-xl transition-all">
+                    Even the little children know the dikes must be watched every moment, and that a hole no longer than your finger can be a very dangerous thing.
+                </p>
+                <p id="p-sentence-5" class="p-2 rounded-xl transition-all">
+                    Many years ago there lived in Holland a boy named Peter.
+                </p>
+                <p id="p-sentence-6" class="p-2 rounded-xl transition-all">
+                    Peter's father was one of the men who tended the gates in the dikes, called <strong>sluices</strong>.
+                </p>
+                <p id="p-sentence-7" class="p-2 rounded-xl transition-all">
+                    He opened and closed the sluices so that <strong>ships</strong> could pass out of Holland's canals into the great sea.
+                </p>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-2 px-2">
+                <i class="fa-solid fa-clipboard-question text-indigo-500 text-2xl"></i>
+                <h3 class="heading-font text-2xl font-bold text-slate-800">Choose the Correct Answer!</h3>
+            </div>
+
+            <div id="quiz-container" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="1" data-hint="1">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">1</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">Where does much of the land of Holland lie?</h4>
+                        </div>
+                        <button onclick="showHint(1)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-1">
+                        <button onclick="checkAnswer(1, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Above sea level
+                        </button>
+                        <button onclick="checkAnswer(1, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Below sea level
+                        </button>
+                        <button onclick="checkAnswer(1, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            High up in the mountains
+                        </button>
+                        <button onclick="checkAnswer(1, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            On a high plateau
+                        </button>
+                    </div>
+                    <div id="feedback-1" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="2" data-hint="2">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">2</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What are the Great Walls called?</h4>
+                        </div>
+                        <button onclick="showHint(2)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-2">
+                        <button onclick="checkAnswer(2, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Dams
+                        </button>
+                        <button onclick="checkAnswer(2, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Dikes
+                        </button>
+                        <button onclick="checkAnswer(2, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Fences
+                        </button>
+                        <button onclick="checkAnswer(2, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Bridges
+                        </button>
+                    </div>
+                    <div id="feedback-2" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="3" data-hint="2">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">3</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What prevents the North Sea from rushing in and flooding the land?</h4>
+                        </div>
+                        <button onclick="showHint(2)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-3">
+                        <button onclick="checkAnswer(3, 0, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            The dikes
+                        </button>
+                        <button onclick="checkAnswer(3, 1, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Tall mountains
+                        </button>
+                        <button onclick="checkAnswer(3, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Big ships
+                        </button>
+                        <button onclick="checkAnswer(3, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Deep canals
+                        </button>
+                    </div>
+                    <div id="feedback-3" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="4" data-hint="6">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">4</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">What was Peter's father doing in Holland?</h4>
+                        </div>
+                        <button onclick="showHint(6)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-4">
+                        <button onclick="checkAnswer(4, 0, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Building houses
+                        </button>
+                        <button onclick="checkAnswer(4, 1, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Tending the gates in the dike (sluices)
+                        </button>
+                        <button onclick="checkAnswer(4, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Sailing ships
+                        </button>
+                        <button onclick="checkAnswer(4, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Catching fish
+                        </button>
+                    </div>
+                    <div id="feedback-4" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-sky-100 transition-all hover:shadow-2xl" data-qid="5" data-hint="7">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <span class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 font-bold flex items-center justify-center shrink-0">5</span>
+                            <h4 class="text-lg md:text-xl font-bold text-slate-800">Where do the ships pass?</h4>
+                        </div>
+                        <button onclick="showHint(7)" class="text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 transition-all">
+                            <i class="fa-solid fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-5">
+                        <button onclick="checkAnswer(5, 0, true)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Out of Holland's canals into the great sea
+                        </button>
+                        <button onclick="checkAnswer(5, 1, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Into the small rivers
+                        </button>
+                        <button onclick="checkAnswer(5, 2, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Over the mountains
+                        </button>
+                        <button onclick="checkAnswer(5, 3, false)" class="option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all">
+                            Through the deep caves
+                        </button>
+                    </div>
+                    <div id="feedback-5" class="mt-4 hidden p-4 rounded-2xl text-sm font-bold"></div>
+                </div>
+            </div>
+
+            <!-- Reset / Try Again Bar -->
+            <div class="text-center pt-6">
+                <button onclick="resetQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-8 py-4 rounded-2xl shadow-md transition-all">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Reset & Try Again
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-slate-400 text-sm font-semibold">
+        Designed with care for young learners & late bloomers 🌟
+    </footer>
+
+    <!-- Interactive JS Logic -->
+    <script>
+        // Track answered questions and score
+        const answeredState = { 1: false, 2: false, 3: false, 4: false, 5: false };
+        let currentScore = 0;
+
+        function updateScoreDisplay() {
+            document.getElementById('score-display').innerText = `${currentScore} / 5`;
+            if(currentScore === 5) {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function checkAnswer(qid, optionIndex, isCorrect) {
+            if (answeredState[qid]) return; // Prevent changing after correct answer
+
+            const optionsContainer = document.getElementById(`options-${qid}`);
+            const buttons = optionsContainer.getElementsByTagName('button');
+            const feedbackDiv = document.getElementById(`feedback-${qid}`);
+
+            answeredState[qid] = true;
+
+            // Disable all buttons for this question
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-70', 'cursor-not-allowed');
+            }
+
+            feedbackDiv.classList.remove('hidden');
+
+            if (isCorrect) {
+                currentScore++;
+                updateScoreDisplay();
+                buttons[optionIndex].classList.remove('bg-slate-50/50', 'border-slate-100');
+                buttons[optionIndex].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'opacity-100');
+                
+                feedbackDiv.className = "mt-4 p-4 rounded-2xl text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-3";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 text-xl"></i> Excellent job! That is correct! 🎉`;
+                
+                // Trigger small celebratory confetti
+                confetti({
+                    particleCount: 40,
+                    spread: 50,
+                    origin: { y: 0.7 }
+                });
+            } else {
+                buttons[optionIndex].classList.remove('bg-slate-50/50', 'border-slate-100');
+                buttons[optionIndex].classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900', 'opacity-100');
+
+                // Find and highlight the correct answer
+                for (let i = 0; i < buttons.length; i++) {
+                    // Check onclick attribute string to find correct answer
+                    if (buttons[i].getAttribute('onclick').includes('true')) {
+                        buttons[i].classList.remove('bg-slate-50/50', 'border-slate-100');
+                        buttons[i].classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-800', 'opacity-100');
+                    }
+                }
+
+                feedbackDiv.className = "mt-4 p-4 rounded-2xl text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-3";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-500 text-xl">></i> Not quite! Check the highlighted hint in the story above and keep trying! 💪`;
+            }
+        }
+
+        function showHint(sentenceNum) {
+            // Remove highlight from all sentences first
+            for (let i = 1; i <= 7; i++) {
+                const el = document.getElementById(`p-sentence-${i}`);
+                if (el) el.classList.remove('highlight-passage', 'pulse-hint', 'bg-amber-100');
+            }
+
+            // Highlight target sentence
+            const target = document.getElementById(`p-sentence-${sentenceNum}`);
+            if (target) {
+                target.classList.add('highlight-passage', 'pulse-hint', 'bg-amber-100');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function readPassage() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop any ongoing speech
+                const text = document.getElementById('passage-container').innerText;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9; // Slightly slower for struggling readers
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Text-to-speech is not supported by your browser.');
+            }
+        }
+
+        function resetQuiz() {
+            currentScore = 0;
+            updateScoreDisplay();
+            for (let i = 1; i <= 5; i++) {
+                answeredState[i] = false;
+                const optionsContainer = document.getElementById(`options-${i}`);
+                const buttons = optionsContainer.getElementsByTagName('button');
+                for (let btn of buttons) {
+                    btn.disabled = false;
+                    btn.className = "option-btn text-left p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/50 hover:bg-sky-50 hover:border-sky-300 font-semibold transition-all";
+                }
+                const feedbackDiv = document.getElementById(`feedback-${i}`);
+                feedbackDiv.classList.add('hidden');
+                feedbackDiv.innerHTML = '';
+            }
+            for (let i = 1; i <= 7; i++) {
+                const el = document.getElementById(`p-sentence-${i}`);
+                if (el) el.classList.remove('highlight-passage', 'pulse-hint', 'bg-amber-100');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
